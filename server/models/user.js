@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     last_login: DataTypes.DATE
   }, {
     sequelize,
+    tableName: 'users',
     modelName: 'User',
   });
   return User;

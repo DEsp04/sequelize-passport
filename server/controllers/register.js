@@ -1,4 +1,5 @@
 //import the sequelize connection instance
+//we're connectecing to the table which is in the passport_db 
 const { sequelize, User } = require('../models');
 
 
@@ -7,28 +8,31 @@ const { sequelize, User } = require('../models');
 const registerUser = async (req, res) => {
   const { first_name, last_name, email, password } = req.body;
 
-  console.log(req.body)
+  //check if user is already registered
+  const alreadyExistsUser = await User.findOne({ where: { email } }).catch(
+    (err) => {
+      console.log("Error: ", err);
+    }
+  );
 
-  // const alreadyExistsUser = await User.findOne({ where: { email } }).catch(
-  //   (err) => {
-  //     console.log("Error: ", err);
-  //   }
-  // );
+  //if user already exist return it 'already exist'
+  if (alreadyExistsUser) {
+    return res.status(409).json({ message: "User with email already exists!" });
+  }
 
-  // if (alreadyExistsUser) {
-  //   return res.status(409).json({ message: "User with email already exists!" });
-  // }
-
-  // const newUser = new User({ first_name, last_name, email, password });
+  //create a new user
+  const newUser = new User({ first_name, last_name, email, password });
   
-  // const savedUser = await newUser.save().catch((err) => {
-  //   console.log("Error: ", err);
-  //   res.status(500).json({ error: "Cannot register user at the moment!" });
-  // });
+  //save user in the database
+  const savedUser = await newUser.save().catch((err) => {
+    console.log("Error: ", err);
+    res.status(500).json({ error: "Cannot register user at the moment!" });
+  });
 
-  // if (savedUser) {
-  //   res.json({ message: "Thanks for registering" })
-  // };
+  //once user is registered, then send a messge "say resgistration success"
+  if (savedUser) {
+    res.json({ message: "Thanks for registering" })
+  };
 
 
 }

@@ -15,8 +15,9 @@ const registerRoutes = require("./routes/register")
 
 const app = express();
 
+//express parses the user's input into a json for the body especially in req.body
 app.use(express.json());
-
+//once the body is parsed into json, it needs to be parsed in urlencoded.
 app.use(express.urlencoded({ extended: false }));
 
 app.use(logger("dev"));
