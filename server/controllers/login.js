@@ -1,6 +1,7 @@
 //import the sequelize connection instance
 const { sequelize, User } = require('../models');
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt")
 
 //--- In case we use .env file ---
 require("dotenv").config();
