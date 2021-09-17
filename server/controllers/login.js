@@ -50,3 +50,5 @@ const loginUser = async (req, res) => {
 module.exports = {
   loginUser,
 }
+
+//token lets the server know that they have been authenticated. This also means that user can save it to the localstorage and present it to the server to give user access to the server: (access to view profile, perform crud on a forum) 
